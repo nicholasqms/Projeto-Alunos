@@ -1,5 +1,6 @@
 import datetime
 
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.forms import ModelForm
 from django.utils import timezone
@@ -12,6 +13,8 @@ class Student(models.Model):
 	course = models.CharField(max_length=100)
     	def __str__(self):              # __unicode__ on Python 2
         	return self.name
+	def get_absolute_url(self):
+            return reverse('student-detail', kwargs={'pk': self.pk})
 
 class Teacher(models.Model):
 	name = models.CharField(max_length=100)
@@ -20,6 +23,8 @@ class Teacher(models.Model):
 	
         def __str__(self):              # __unicode__ on Python 2
                 return self.name
+	def get_absolute_url(self):
+            return reverse('teacher-detail', kwargs={'pk': self.pk})
 
 class StudentForm(ModelForm):
 	class Meta:
