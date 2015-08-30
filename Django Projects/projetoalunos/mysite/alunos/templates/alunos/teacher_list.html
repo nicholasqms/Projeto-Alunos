@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Teachers</h2>
+    <ul>
+        {% for Teacher in object_list %}
+            <li>{{ Teacher.name }}</li>
+            <li>{{ Teacher.birth_date }}</li>
+            <li>{{ Teacher.department }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
