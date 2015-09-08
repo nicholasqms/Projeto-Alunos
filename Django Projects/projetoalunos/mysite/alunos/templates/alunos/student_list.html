@@ -4,7 +4,8 @@
     <h2>Students</h2>
     <ul>
         {% for Student in object_list %}
-            <li>{{ Student.name }}</li>
+	   {% url 'student_update' Student.id as Student_url %} 
+	    <li><a href={{Student_url}}  >{{ Student.name }}</a></li>
             <li>{{ Student.birth_date }}</li>
             <li>{{ Student.dre }}</li>
             <li>{{ Student.course }}</li><li></li>

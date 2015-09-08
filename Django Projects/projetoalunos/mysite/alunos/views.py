@@ -3,7 +3,6 @@ from django.views.generic.edit import CreateView,FormView, DeleteView, UpdateVie
 from django.core.urlresolvers import reverse_lazy
 from .models import Student, Teacher, Grade
 from .models import StudentForm, TeacherForm
-from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django import forms
 
@@ -17,23 +16,27 @@ class TeacherList(ListView):
 
 class StudentCreate(CreateView):
       model = Student
-      fields = ['name','birth_date','dre','course','grade']
+      fields = ['name','birth_date','dre','course']
+      sucess_url = reverse_lazy('student-list')
 
 class StudentUpdate(UpdateView):
       model = Student
       fields = ['name','birth_date','dre','course']
+      sucess_url = reverse_lazy('student-list')
 
 class StudentDelete(DeleteView):
       model = Student
-      success_url = reverse('student-list')
+      success_url = reverse_lazy('student-list')
 
 class TeacherCreate(CreateView):
       model = Teacher
       fields = ['name','birth_date','department']
+      success_url = reverse_lazy('teacher-list')
 
 class TeacherUpdate(UpdateView):
       model = Teacher
       fields = ['name','birth_date','department']
+      success_url = reverse_lazy('teacher-list')
 
 class TeacherDelete(DeleteView):
       model = Teacher

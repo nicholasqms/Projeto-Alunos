@@ -2,8 +2,9 @@
 {% block content %}
     <h2>Teachers</h2>
     <ul>
-        {% for Teacher in object_list %}
-            <li>{{ Teacher.name }}</li>
+      {% for Teacher in object_list %}
+            {% url 'teacher_update' Teacher.id as Teacher_url %}
+            <li><a href={{Teacher_url}} >{{ Teacher.name }}</a></li>  
             <li>{{ Teacher.birth_date }}</li>
             <li>{{ Teacher.department }}</li><li></li>
         {% endfor %}

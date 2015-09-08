@@ -15,7 +15,8 @@ class Student(models.Model):
     	def __str__(self):              # __unicode__ on Python 2
         	return self.name
 	def get_absolute_url(self):
-            return reverse('student', kwargs={'pk': self.pk})
+            return reverse('student-list')
+#            return reverse('student-list', kwargs={'pk': self.pk})
 
 class Grade(models.Model):
 	subject= models.CharField(max_length=100)
@@ -34,7 +35,7 @@ class Teacher(models.Model):
         def __str__(self):              # __unicode__ on Python 2
                 return self.name
 	def get_absolute_url(self):
-            return reverse('teacher', kwargs={'pk': self.pk})
+            return reverse('teacher-list', kwargs={'pk': self.pk})
 
 class StudentForm(ModelForm):
 	class Meta:
