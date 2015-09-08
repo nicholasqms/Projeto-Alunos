@@ -7,8 +7,9 @@ from alunos.models import Student, Teacher
 from alunos.views import StudentList, TeacherList, StudentCreate, StudentUpdate, StudentDelete, TeacherCreate, TeacherUpdate, TeacherDelete
 
 urlpatterns = [
-        url(r'^students/', StudentList.as_view()),	
-        url(r'^teachers/', TeacherList.as_view()),
+	url(r'^',include('django.contrib.auth.urls')),
+        url(r'^students/', StudentList.as_view(), name = 'student-list'),	
+        url(r'^teachers/', TeacherList.as_view(), name = 'teacher-list'),
 	#url(r'^alunos/', TemplateView.as_view(template_name="alunos.html")),
     
     url(r'student/add/$', StudentCreate.as_view(), name='student_add'),
