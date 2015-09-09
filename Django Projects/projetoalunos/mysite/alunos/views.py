@@ -5,7 +5,10 @@ from .models import Student, Teacher, Grade
 from .models import StudentForm, TeacherForm
 from django.contrib.auth.models import User
 from django import forms
-
+from forms import StudentAddForm
+from django.contrib.auth import login
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
 # Create your views here.
 
 class StudentList(ListView):
@@ -41,6 +44,19 @@ class TeacherUpdate(UpdateView):
 class TeacherDelete(DeleteView):
       model = Teacher
       success_url = reverse_lazy('teacher-list')
+
+def StudentAddUser(request):
+    if request.method == "POST":
+        form = StudentAddForm(request.POST)
+        if form.is_valid():
+            new_user = User.objects.create_user(**form.cleaned_data)
+            login(request,new_user)
+            # redirect, or however you want to get to the main view
+            return reverse_lazy('student-list')
+    else:
+        form = StudentAddForm() 
+
+    return render(request, 'adduser.html', {'form': form}) 
 
 
 #class UserCreationForm(forms.ModelForm)
