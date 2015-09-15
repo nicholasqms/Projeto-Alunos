@@ -6,27 +6,13 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 # Register your models here.
 
-from .models import Student, Teacher, Grade,StudentUser
+from .models import StudentUser,TeacherUser,studentFieldsList
 
 #admin.site.register(Student)
 #admin.site.register(Grade)
-admin.site.register(Teacher)
 
 
-class GradeInLine (admin.TabularInline):
-	model = Grade
-	extra = 3
 
-class StudentAdmin (admin.ModelAdmin):
-	fieldsets = [
-	(None, {'fields': ['subject']}),
-	('Birth Date', {'fields': ['birth_date']}),
-	('DRE', {'fields': ['dre']}),
-	('Course', {'fields': ['course']}),
- ]
-	inlines = [GradeInLine]
-
-admin.site.register(Student,StudentAdmin)
 
 
 class StudentUserCreationForm(forms.ModelForm):
@@ -37,7 +23,7 @@ class StudentUserCreationForm(forms.ModelForm):
 
     class Meta:
         model = StudentUser
-        fields = ('name','birth_date','dre','course')
+        fields = studentFieldsList
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -65,7 +51,7 @@ class StudentUserChangeForm(forms.ModelForm):
 
     class Meta:
         model = StudentUser
-        fields = ('name','birth_date','dre','course','is_active', 'is_admin')
+        fields = studentFieldsList
 
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.

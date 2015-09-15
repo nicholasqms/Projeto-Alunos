@@ -1,49 +1,46 @@
+from django.views.generic.base import TemplateView
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView,FormView, DeleteView, UpdateView
 from django.core.urlresolvers import reverse_lazy
-from .models import Student, Teacher, Grade
-from .models import StudentForm, TeacherForm
+from .models import StudentUser,TeacherUser, studentFieldsList,teacherFieldsList
 from django.contrib.auth.models import User
 from django import forms
-from forms import StudentAddForm, StudentUserCreationForm
-from django.contrib.auth import login,authenticate
+from forms import StudentAddForm, StudentUserCreationForm,TeacherUserCreationForm
+from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect,HttpResponse
 from django.shortcuts import render,render_to_response
 from django.template import RequestContext
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 
-class StudentList(ListView):
-     model = Student
+class HomePageView(TemplateView):
+	template_name = "base.html"
 
-class TeacherList(ListView):
-     model = Teacher
+class StudentUserList(ListView):
+     model = StudentUser
 
-class StudentCreate(CreateView):
-      model = Student
-      fields = ['name','birth_date','dre','course']
+class TeacherUserList(ListView):
+     model = TeacherUser
+
+
+class StudentUserUpdate(UpdateView):
+      model = StudentUser
+      fields = studentFieldsList
       sucess_url = reverse_lazy('student-list')
 
-class StudentUpdate(UpdateView):
-      model = Student
-      fields = ['name','birth_date','dre','course']
-      sucess_url = reverse_lazy('student-list')
-
-class StudentDelete(DeleteView):
-      model = Student
+class StudentUserDelete(DeleteView):
+      model = StudentUser
       success_url = reverse_lazy('student-list')
 
-class TeacherCreate(CreateView):
-      model = Teacher
+class TeacherUserUpdate(UpdateView):
+      model = TeacherUser
       fields = ['name','birth_date','department']
       success_url = reverse_lazy('teacher-list')
 
-class TeacherUpdate(UpdateView):
-      model = Teacher
-      fields = ['name','birth_date','department']
-      success_url = reverse_lazy('teacher-list')
-
-class TeacherDelete(DeleteView):
-      model = Teacher
+class TeacherUserDelete(DeleteView):
+      model = TeacherUser
       success_url = reverse_lazy('teacher-list')
 
 def StudentAddUser(request):
@@ -95,13 +92,13 @@ def StudentUserLogin(request):
         # If we have a User object, the details are correct.
         # If None (Python's way of representing the absence of a value), no user
         # with matching credentials was found.
-        if user:
+        if user is not None:
             # Is the account active? It could have been disabled.
             if user.is_active:
                 # If the account is valid and active, we can log the user in.
                 # We'll send the user back to the homepage.
                 login(request, user)
-                return reverse_lazy('main')
+                return HttpResponseRedirect('studentuser-list')
             else:
                 # An inactive account was used - no logging in!
                 return HttpResponse("Your account is disabled.")
@@ -116,40 +113,52 @@ def StudentUserLogin(request):
         # No context variables to pass to the template system, hence the
         # blank dictionary object...
         return render_to_response('login.html', {}, context)
-#class UserCreationForm(forms.ModelForm)
-#"""
-#    A form that creates a user, with no privileges, from the given username and
-#    password.
-#    """
-#    error_messages = {
- #       'password_mismatch': _("The two password fields didn't match."),
- #   }
-  #  password1 = forms.CharField(label=_("Password"),
-   #     widget=forms.PasswordInput)
-    #password2 = forms.CharField(label=_("Password confirmation"),
-     #   widget=forms.PasswordInput,
-      #  help_text=_("Enter the same password as above, for verification."))
+    
+@login_required
+def StudentUserLogout(request):
+    # Since we know the user is logged in, we can now just log them out.
+    logout(request)
 
-   # class Meta:
-#        model = User
- #       fields = ("username",)
-#
- #   def clean_password2(self):
-  #      password1 = self.cleaned_data.get("password1")
-   #     password2 = self.cleaned_data.get("password2")
-    #    if password1 and password2 and password1 != password2:
-     #       raise forms.ValidationError(
-      #          self.error_messages['password_mismatch'],
-       #         code='password_mismatch',
-   #         )
-  #      return password2
+    # Take the user back to the homepage.
+    return HttpResponseRedirect('/home/')
 
- #   def save(self, commit=True):
-#        user = super(UserCreationForm, self).save(commit=False)
-#        user.set_password(self.cleaned_data["password1"])
-#        if commit:
-#            user.save()
-#        return user
+    
+        
+    
+def TeacherAddUser(request):
+    if request.method == "POST":
+        form = TeacherAddForm(request.POST)
+        if form.is_valid():
+            new_user = User.objects.create_user(**form.cleaned_data)
+            login(request,new_user)
+            # redirect, or however you want to get to the main view
+            return reverse_lazy('teacher-list')
+    else:
+        form = TeacherAddForm() 
+
+    return render(request, 'adduser.html', {'form': form}) 
+
+def TeacherCreateUser(request):
+    if request.method == "POST":
+        form = TeacherUserCreationForm(request.POST)
+        if form.is_valid():
+#            new_user = User.objects.create_user(TeacherUser.self,TeacherUser.name,TeacherUser.birth_date,TeacherUser.department)
+ 	   user = form.save()
+	   user.set_password(user.password)
+	   user.save()
+           login(request,user)
+            # redirect, or however you want to get to the main view
+           return reverse_lazy('teacher-list')
+    else:
+        form = TeacherUserCreationForm()
+
+    return render(request, 'createuser.html', {'form': form})
+
+def TeacherUserLogin(request):
+    # Like before, obtain the context for the user's request.
+    context = RequestContext(request)
+
+    # If the request is a HTTP POST, try to pull out the relevant information.
 
 
 

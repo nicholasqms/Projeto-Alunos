@@ -17,24 +17,26 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf.urls import include
 from django.http import HttpResponse
-from alunos.models import Student, Teacher
-from alunos.views import StudentList, TeacherList, StudentCreate, StudentUpdate, StudentDelete, TeacherCreate, TeacherUpdate, TeacherDelete, StudentAddUser,StudentCreateUser,StudentUserLogin
+from alunos.views import StudentUserUpdate, StudentUserDelete, TeacherUserUpdate, TeacherUserDelete, StudentAddUser,StudentCreateUser,StudentUserLogin,StudentUserList,TeacherCreateUser,TeacherUserLogin,TeacherUserList, HomePageView, StudentUserLogout
 from alunos import views
 
 urlpatterns = [
-	url(r'main',StudentList.as_view(),name='main'),
+#	url(r'^',StudentList.as_view(),name='main'),
 #	url(r'^',include('django.contrib.auth.urls')),
-        url(r'^login/$', views.StudentUserLogin, name='login'),
-        url(r'^students/all', StudentList.as_view(), name='student-list'),	
-        url(r'^teachers/all', TeacherList.as_view(),name='teacher-list'),
+    url(r'^students/login/$', views.StudentUserLogin, name='login'),
+    url(r'^logout$', views.StudentUserLogout, name ='logout'),
 	#url(r'^alunos/', TemplateView.as_view(template_name="alunos.html")),
 #    url(r'students/adduser', views.StudentAddUser, name = 'add_student_user'),
     url(r'students/create', views.StudentCreateUser, name = 'create_student_user'),
-    url(r'students/add/$', StudentCreate.as_view(), name='student_add'),
-    url(r'students/(?P<pk>[0-9]+)/$', StudentUpdate.as_view(), name='student_update'),
-    url(r'students/(?P<pk>[0-9]+)/delete/$', StudentDelete.as_view(), name='student_delete'),
-    url(r'teachers/add/$', TeacherCreate.as_view(), name='teacher_add'),
-    url(r'teachers/(?P<pk>[0-9]+)/$', TeacherUpdate.as_view(), name='teacher_update'),
-    url(r'teachers/(?P<pk>[0-9]+)/delete/$', TeacherDelete.as_view(), name='teacher_delete'),
+    url(r'students/(?P<pk>[0-9]+)$', StudentUserUpdate.as_view(), name='student_update'),
+    url(r'students/(?P<pk>[0-9]+)/delete/$', StudentUserDelete.as_view(), name='student_delete'),
+    url(r'teachers/create', views.TeacherCreateUser, name = 'create_teacher_user'),
+    url(r'teachers/', TeacherUserList.as_view(), name = 'teacheruser-list'),
+    url(r'teachers/(?P<pk>[0-9]+)$', TeacherUserUpdate.as_view(), name='teacher_update'),
+    url(r'teachers/(?P<pk>[0-9]+)/delete/$', TeacherUserDelete.as_view(), name='teacher_delete'),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'students/',StudentUserList.as_view(),name='studentuser-list'),
+#    url(r'^',include('django.contrib.auth.urls')),
+    url(r'home',HomePageView.as_view(),name='homepage'),
+#    url(r'^',HomePageView.as_view(),name='main'),
 ]
