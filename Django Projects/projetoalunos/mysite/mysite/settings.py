@@ -73,7 +73,11 @@ LOGIN_URL = '/login/'
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
-
+AUTHENTICATION_BACKENDS = [
+        'django.contrib.auth.backends.ModelBackend',
+        'alunos.backends.studentbackend.StudentBackend',
+        #'alunos.backends.teacherauthbackend',
+]
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 

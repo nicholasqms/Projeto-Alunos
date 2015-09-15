@@ -8,11 +8,13 @@ from django import forms
 from forms import StudentAddForm, StudentUserCreationForm,TeacherUserCreationForm
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponseRedirect,HttpResponse
 from django.shortcuts import render,render_to_response
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
-
+from mysite import settings
+from .backends.studentbackend import  StudentBackend
 # Create your views here.
 
 class HomePageView(TemplateView):
@@ -60,18 +62,29 @@ def StudentCreateUser(request):
     if request.method == "POST":
         form = StudentUserCreationForm(request.POST)
         if form.is_valid():
-#            new_user = User.objects.create_user(StudentUser.self,StudentUser.name,StudentUser.birth_date,StudentUser.dre,StudentUser.course)
- 	   user = form.save()
-	   user.set_password(user.password)
-	   user.save()
-           login(request,user)
+            user = form.save()
+	    user.set_password(user.password)
+	    user.save()
+        
+        backend = StudentBackend()
+        if (backend.authenticate(username=username, password=password))!=None:
+            login(request,user)
             # redirect, or however you want to get to the main view
-           return reverse_lazy('student-list')
+        return reverse_lazy('student-list')
     else:
         form = StudentUserCreationForm()
 
     return render(request, 'createuser.html', {'form': form})
-
+"""
+def StudentUserLogin(request):
+#    if request.method == "POST":
+        form = AuthenticationForm(None,request.POST)
+        if form.is_valid():
+            login(request,auth_form.get_user())
+            return HttpResponseRedirect('/home/')
+        return render(request,'login.html',{'form':form})    
+            
+"""    
 def StudentUserLogin(request):
     # Like before, obtain the context for the user's request.
     context = RequestContext(request)
@@ -87,7 +100,8 @@ def StudentUserLogin(request):
 
         # Use Django's machinery to attempt to see if the username/password
         # combination is valid - a User object is returned if it is.
-        user = authenticate(username=username, password=password)
+        backend = StudentBackend()
+        user = backend.authenticate(username=username, password=password)
 
         # If we have a User object, the details are correct.
         # If None (Python's way of representing the absence of a value), no user

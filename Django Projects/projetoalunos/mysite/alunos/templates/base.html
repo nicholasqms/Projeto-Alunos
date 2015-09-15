@@ -8,13 +8,13 @@
     <b>Projeto Alunos</b>
    {% if user.is_authenticated %}
     <br></br> <a href='home'>Home</a> 
-    <br></br> <a href='/students/users'>Take a glance at the system's student users</a>
-    <br></br> <a href='/teachers/users'>Take a glance at the system's teacher users</a>
+    <br></br> <a href='/students/createuser'>Cadastrar um aluno</a>
+    <br></br> <a href='/teachers/createuser'>Cadastrar um Professor</a>
+    <br></br> <a href='/students/users'>Listar Alunos</a>
+    <br></br> <a href='/teachers/users'>Listar Professores</a>
     <br></br> <a href='/logout'>Logout</a>
    {% else %}
     <br></br> <a href='/students/login/'>Login</a>
-    <br></br> <a href='/students/createuser'>Register as a Student</a>
-    <br></br> <a href='/teachers/createuser'>Register as a Teacher</a>
     {% endif %}
     {% block content %}{% endblock content %}
     </body>

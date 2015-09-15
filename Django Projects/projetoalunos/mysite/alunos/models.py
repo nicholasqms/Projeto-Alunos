@@ -13,10 +13,14 @@ teacherFieldsList = ['name','birth_date','register_number','CPF','contact','emai
 # Create your models here.
 
 class StudentUser(AbstractBaseUser):
+    username = models.CharField(
+        verbose_name='Username',
+        max_length=30,
+        unique=True,
+    )
     name = models.CharField(
         verbose_name='Student\'s Name',
-        max_length=255,
-        unique=True,
+        max_length=255
     )
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
@@ -36,7 +40,7 @@ class StudentUser(AbstractBaseUser):
 
 #    objects = MyUserManager()
 
-    USERNAME_FIELD = 'name'
+    USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = studentFieldsList
 
     def get_full_name(self):
@@ -68,10 +72,14 @@ class StudentUser(AbstractBaseUser):
 	return False
 
 class TeacherUser(AbstractBaseUser):
+    username = models.CharField(
+        verbose_name='Username',
+        max_length=30,
+        unique=True
+    )
     name = models.CharField(
         verbose_name='Teacher\'s Name',
-        max_length=255,
-        unique=True,
+        max_length=255
     )
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
@@ -92,7 +100,7 @@ class TeacherUser(AbstractBaseUser):
 
 #    objects = MyUserManager()
 
-    USERNAME_FIELD = 'name'
+    USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = teacherFieldsList
 
     def get_full_name(self):

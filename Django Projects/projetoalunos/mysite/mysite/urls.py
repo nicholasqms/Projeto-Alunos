@@ -17,7 +17,8 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf.urls import include
 from django.http import HttpResponse
-from alunos.views import StudentUserUpdate, StudentUserDelete, TeacherUserUpdate, TeacherUserDelete, StudentAddUser,StudentCreateUser,StudentUserLogin,StudentUserList,TeacherCreateUser,TeacherUserLogin,TeacherUserList, HomePageView, StudentUserLogout
+from alunos.views import StudentUserUpdate, StudentUserDelete, TeacherUserUpdate, TeacherUserDelete, StudentAddUser
+from alunos.views import StudentCreateUser,StudentUserLogin,StudentUserList,TeacherCreateUser,TeacherUserLogin,TeacherUserList, HomePageView, StudentUserLogout
 from alunos import views
 
 urlpatterns = [
