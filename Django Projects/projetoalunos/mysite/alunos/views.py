@@ -2,7 +2,7 @@ from django.views.generic.base import TemplateView
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView,FormView, DeleteView, UpdateView
 from django.core.urlresolvers import reverse_lazy
-from .models import StudentUser,TeacherUser, studentFieldsList,teacherFieldsList
+from .models import Student,StudentUser,TeacherUser, studentFieldsList,teacherFieldsList
 from django.contrib.auth.models import User
 from django import forms
 from forms import StudentAddForm, StudentUserCreationForm,TeacherUserCreationForm
@@ -19,18 +19,21 @@ from .backends.studentbackend import  StudentBackend
 
 class HomePageView(TemplateView):
 	template_name = "base.html"
+	
+class StudentList(ListView):
+     model = Student	
 
 class StudentUserList(ListView):
      model = StudentUser
 
 class TeacherUserList(ListView):
-     model = TeacherUser
+    model = TeacherUser
 
 
 class StudentUserUpdate(UpdateView):
-      model = StudentUser
-      fields = studentFieldsList
-      sucess_url = reverse_lazy('student-list')
+    model = StudentUser
+    fields = studentFieldsList
+    sucess_url = reverse_lazy('student-list')
 
 class StudentUserDelete(DeleteView):
       model = StudentUser
@@ -42,9 +45,24 @@ class TeacherUserUpdate(UpdateView):
       success_url = reverse_lazy('teacher-list')
 
 class TeacherUserDelete(DeleteView):
-      model = TeacherUser
-      success_url = reverse_lazy('teacher-list')
+    model = TeacherUser
+    success_url = reverse_lazy('teacher-list')
 
+class StudentCreate(CreateView):
+      model = Student
+      fields = studentFieldsList
+      sucess_url = reverse_lazy('studentuser-list')    
+    
+class StudentUpdate(UpdateView):
+      model = Student
+      fields = studentFieldsList
+      sucess_url = reverse_lazy('student-list')
+        
+class StudentDelete(DeleteView):
+      model = Student
+      success_url = reverse_lazy('student-list')        
+        
+    
 def StudentAddUser(request):
     if request.method == "POST":
         form = StudentAddForm(request.POST)

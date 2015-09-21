@@ -7,10 +7,53 @@ from django.utils import timezone
 from django.core.urlresolvers import reverse_lazy
 
 studentInactiveStatusList = ['Graduado','Trancado','Transferencia']
-studentFieldsList = ['name','birth_date','dre','rg','zip_code','residence_address','telephone_number','course']
+studentFieldsList = ['name','bolsa','tipo','birth_date','dre','rg','zip_code','residence_address','telephone_number','course']
 teacherFieldsList = ['name','birth_date','register_number','CPF','contact','email']
+tipoBolsa = [('PIBIC','PIBIC'),('FAPERJ','FAPERJ'),('CNPq','CNPq'),('Projeto','Projeto')]
+tipoOrientado = [('Ensino Medio','Ensino Medio'),('Iniciacao Cientifica','Iniciacao Cientifica'),('Mestrado','Mestrado'),('Doutorado','Doutorado')]
+tipoOrientador = ['Professor','Pesquisador']
 
 # Create your models here.
+
+
+
+
+class Student(models.Model):
+    user =models.OneToOneField(User)
+    name = models.CharField(
+        verbose_name='Student\'s Name',
+        max_length=255
+    )
+    bolsa = models.CharField(max_length=7, choices = tipoBolsa,default='PIBIC')
+    tipo = models.CharField(max_length=30, choices = tipoOrientado,default='Iniciacao Cientifica')
+    birth_date = models.DateField(blank=True, null=True)
+    dre = models.PositiveIntegerField(blank=True, null= True)
+    rg = models.PositiveIntegerField(blank=True, null=True)
+    zip_code = models.PositiveIntegerField(blank=True, null=True)
+    residence_address = models.CharField(max_length=255, default = 'Insira o endereco de residencia')
+    telephone_number = models.PositiveIntegerField(blank=True, null=True)
+    course = models.CharField(max_length=100)
+    def __str__(self):              # __unicode__ on Python 2
+        return self.name
+    def get_absolute_url(self):
+        return reverse('student-list')
+#	pk = self.pk
+#            return reverse('student-list', kwargs={'pk': self.pk})
+
+class Orientador(models.Model):
+    user =models.OneToOneField(User)
+    name = models.CharField(
+        verbose_name='Nome do Orientador',
+        max_length=255
+    )
+    is_active = models.BooleanField(default=True)
+    is_admin = models.BooleanField(default=False)
+    birth_date = models.DateField(blank=True, null=True)
+    register_number = models.PositiveIntegerField(blank=True, null = True)
+    email = models.CharField(max_length=100, default='your_email@service.com')
+    contact = models.PositiveIntegerField(blank=True, null = True)
+    CPF = models.PositiveIntegerField(blank=True, null = True)
+
 
 class StudentUser(AbstractBaseUser):
     username = models.CharField(
@@ -22,6 +65,8 @@ class StudentUser(AbstractBaseUser):
         verbose_name='Student\'s Name',
         max_length=255
     )
+    tipo = models.CharField(max_length=30, choices = tipoOrientado,default='Iniciacao Cientifica')
+    bolsa = models.CharField(max_length=7, choices = tipoBolsa,default='PIBIC')
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     birth_date = models.DateField(blank=True, null=True)

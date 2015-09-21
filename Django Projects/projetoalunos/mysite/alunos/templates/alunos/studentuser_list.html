@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Student Users</h2>
+    <ul>
+        {% for StudentUser in object_list %}
+           {% url 'student_update' StudentUser.id as StudentUser_url %}
+            <li><a href={{StudentUser_url}}  >{{ StudentUser.name }}</a></li><a>{{StudentUser.pk}}</a>
+            <li>{{ StudentUser.birth_date }}</li>
+            <li>{{ StudentUser.dre }}</li>
+            <li>{{ StudentUser.course }}</li>
+<br></br>
+        {% endfor %}
+     </ul>
+{%endblock%}

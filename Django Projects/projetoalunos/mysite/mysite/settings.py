@@ -75,7 +75,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 AUTHENTICATION_BACKENDS = [
         'django.contrib.auth.backends.ModelBackend',
-        'alunos.backends.studentbackend.StudentBackend',
+#        'alunos.backends.studentbackend.StudentBackend',
         #'alunos.backends.teacherauthbackend',
 ]
 # Database
