@@ -1,20 +1,39 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>Students</h2>
+    <h2>Alunos</h2>
     <ul>
+        <table id="alunos">
+        <tr>
+            <th>Nome</th>
+            <th>Id</th>
+            <th>Bolsa</th>
+            <th>Tipo</th>
+            <th>Data Nascimento</th>
+            <th>DRE</th>
+            <th>RG</th>
+            <th>CEP</th>
+            <th>Endereço</th>
+            <th>Telefone</th>
+            <th>Curso</th>
+            <th>Orientador</th>
+        </tr>
+        
         {% for Student in object_list %}
 	        {% url 'student_update' Student.id as Student_url %} 
-        <h3><li><a href={{Student_url}}  >{{ Student.name }}</a></li><a>{{Student.pk}}</a></h3>
-        <li>{{ Student.bolsa }}</li>
-        <li>{{ Student.tipo }}</li>
-        <li>{{ Student.data_Nascimento }}</li>
-        <li>{{ Student.DRE }}</li>
-        <li>{{ Student.RG }}</li>
-        <li>{{ Student.CEP }}</li>
-        <li>{{ Student.endereco }}</li>
-        <li>{{ Student.telefone }}</li>
-        <li>{{ Student.curso }}</li>
+        <tr>
+            <td><a href={{Student_url}}  >{{ Student.name }}</a></td>
+            <td>{{Student.pk}}</td>
+            <td>{{ Student.bolsa }}</td>
+            <td>{{ Student.tipo }}</td>
+            <td>{{ Student.data_Nascimento }}</td>
+            <td>{{ Student.DRE }}</td>
+            <td>{{ Student.RG }}</td>
+            <td>{{ Student.CEP }}</td>
+            <td>{{ Student.endereco }}</td>
+            <td>{{ Student.telefone }}</td>
+            <td>{{ Student.curso }}</td>
+            <td>{{ Student.orientador_aluno }}</td>
 <!--            {% for x in Student.studentFieldsList %}
                 {{ atttribute }} {{ x }}
                 <li>{{Student.attribute|safe}}</li>

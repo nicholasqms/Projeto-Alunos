@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html lang="en-us" >
+<head>
+<title>Add user | Django site admin</title>
+<link rel="stylesheet" type="text/css" href="/static/admin/css/base.css" />
+<link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css" />
+<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="/static/admin/css/ie.css" /><![endif]-->
+
+<script type="text/javascript">window.__admin_media_prefix__ = "/static/admin/";</script>
+<script type="text/javascript">window.__admin_utc_offset__ = "\u002D10800";</script>
+
+<script type="text/javascript" src="/admin/jsi18n/"></script>
+<script type="text/javascript" src="/static/admin/js/core.js"></script>
+<script type="text/javascript" src="/static/admin/js/admin/RelatedObjectLookups.js"></script>
+<script type="text/javascript" src="/static/admin/js/jquery.js"></script>
+<script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
+<script type="text/javascript" src="/static/admin/js/actions.js"></script>
+
+<meta name="robots" content="NONE,NOARCHIVE" />
+</head>
+
+
+<body class="popup  app-auth model-user change-form">
+
+<!-- Container -->
+<div id="container">
+
+    
+
+    
+        
+    
+
+    <!-- Content -->
+    <div id="content" class="colM">
+        
+        <h1>Add user</h1>
+        <div id="content-main">
+
+
+
+<form enctype="multipart/form-data" action="" method="post" id="user_form" novalidate><input type='hidden' name='csrfmiddlewaretoken' value='yxJbpbGcOUNJb8Ldpm941cgETw8q0aVa' />
+  
+    <p>Enter a username and password.</p>
+  
+
+<div>
+<input type="hidden" name="_popup" value="1" />
+<input type="hidden" name="_to_field" value="id" />
+
+
+
+
+
+  <fieldset class="module aligned wide">
+    
+    
+    
+        <div class="form-row field-username">
+            
+            
+                <div>
+                    
+                    
+                        <label class="required" for="id_username">Username:</label>
+                        
+                            <input class="vTextField" id="id_username" maxlength="30" name="username" type="text" />
+                        
+                    
+                    
+                        <p class="help">Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only.</p>
+                    
+                </div>
+            
+        </div>
+    
+        <div class="form-row field-password1">
+            
+            
+                <div>
+                    
+                    
+                        <label class="required" for="id_password1">Password:</label>
+                        
+                            <input id="id_password1" name="password1" type="password" />
+                        
+                    
+                    
+                </div>
+            
+        </div>
+    
+        <div class="form-row field-password2">
+            
+            
+                <div>
+                    
+                    
+                        <label class="required" for="id_password2">Password confirmation:</label>
+                        
+                            <input id="id_password2" name="password2" type="password" />
+                        
+                    
+                    
+                        <p class="help">Enter the same password as above, for verification.</p>
+                    
+                </div>
+            
+        </div>
+    
+</fieldset>
+
+
+
+
+
+<script type="text/javascript">document.getElementById("id_username").focus();</script>
+
+
+
+
+
+
+
+
+
+<div class="submit-row">
+<input type="submit" value="Save" class="default" name="_save" />
+
+
+
+
+</div>
+
+
+
+    <script type="text/javascript">
+        (function($) {
+            $(document).ready(function() {
+                $('.add-another').click(function(e) {
+                    e.preventDefault();
+                    showAddAnotherPopup(this);
+                });
+                $('.related-lookup').click(function(e) {
+                    e.preventDefault();
+                    showRelatedObjectLookupPopup(this);
+                });
+            
+                $('form#user_form :input:visible:enabled:first').focus()
+            
+            });
+        })(django.jQuery);
+    </script>
+
+
+
+
+<script type="text/javascript">
+(function($) {
+    var field;
+
+
+})(django.jQuery);
+</script>
+
+
+</div>
+</form></div>
+
+        
+        <br class="clear" />
+    </div>
+    <!-- END Content -->
+
+    <div id="footer"></div>
+</div>
+<!-- END Container -->
+
+</body>
+</html>
