@@ -5,10 +5,14 @@ from django.db import models
 from django.forms import ModelForm
 from django.utils import timezone
 from django.core.urlresolvers import reverse_lazy
+from django.core.exceptions import ValidationError
+#from alunos.validators import dre_is_valid
 
 studentInactiveStatusList = ['Graduado','Trancado','Transferencia']
-studentFieldsList = ['name','bolsa','tipo','birth_date','dre','rg','zip_code','residence_address','telephone_number','course']
-teacherFieldsList = ['name','birth_date','register_number','CPF','contact','email']
+studentFieldsList = ['user','name','bolsa','tipo','data_Nascimento','DRE','RG','CEP','endereco','telefone','curso','orientador_aluno']
+orientadorFieldsList = ['user','name','is_active','is_admin','data_Nascimento','CPF','email','contato','numero_Registro']
+studentUserFieldsList = ['name','bolsa','tipo','data_Nascimento','DRE','RG','CEP','endereco','telefone','curso']
+teacherFieldsList = ['name','data_Nascimento','register_number','CPF','contact','email']
 tipoBolsa = [('PIBIC','PIBIC'),('FAPERJ','FAPERJ'),('CNPq','CNPq'),('Projeto','Projeto')]
 tipoOrientado = [('Ensino Medio','Ensino Medio'),('Iniciacao Cientifica','Iniciacao Cientifica'),('Mestrado','Mestrado'),('Doutorado','Doutorado')]
 tipoOrientador = ['Professor','Pesquisador']
@@ -17,28 +21,29 @@ tipoOrientador = ['Professor','Pesquisador']
 
 
 
-
 class Student(models.Model):
     user =models.OneToOneField(User)
     name = models.CharField(
-        verbose_name='Student\'s Name',
+        verbose_name='Nome do Aluno',
         max_length=255
     )
+    studentFieldsList = ['user','name','bolsa','tipo','data_Nascimento','DRE','RG','CEP','endereco','telefone','curso']
     bolsa = models.CharField(max_length=7, choices = tipoBolsa,default='PIBIC')
     tipo = models.CharField(max_length=30, choices = tipoOrientado,default='Iniciacao Cientifica')
-    birth_date = models.DateField(blank=True, null=True)
-    dre = models.PositiveIntegerField(blank=True, null= True)
-    rg = models.PositiveIntegerField(blank=True, null=True)
-    zip_code = models.PositiveIntegerField(blank=True, null=True)
-    residence_address = models.CharField(max_length=255, default = 'Insira o endereco de residencia')
-    telephone_number = models.PositiveIntegerField(blank=True, null=True)
-    course = models.CharField(max_length=100)
+    data_Nascimento = models.DateField(blank=True, null=True)
+    DRE = models.PositiveIntegerField(blank=True, null= True)#,validators=[dre_is_valid])
+    RG = models.PositiveIntegerField(blank=True, null=True)
+    CEP = models.PositiveIntegerField(blank=True, null=True)
+    endereco = models.CharField(max_length=255, default = 'Insira o endereco de residencia')
+    telefone = models.PositiveIntegerField(blank=True, null=True)
+    curso = models.CharField(max_length=100)
+    orientador_aluno = models.ForeignKey('Orientador')
     def __str__(self):              # __unicode__ on Python 2
         return self.name
     def get_absolute_url(self):
         return reverse('student-list')
 #	pk = self.pk
-#            return reverse('student-list', kwargs={'pk': self.pk})
+#            return reverse('student-list', kwaRGs={'pk': self.pk})
 
 class Orientador(models.Model):
     user =models.OneToOneField(User)
@@ -48,12 +53,15 @@ class Orientador(models.Model):
     )
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    birth_date = models.DateField(blank=True, null=True)
-    register_number = models.PositiveIntegerField(blank=True, null = True)
+    data_Nascimento = models.DateField(blank=True, null=True)
+    numero_Registro = models.PositiveIntegerField(blank=True, null = True)
     email = models.CharField(max_length=100, default='your_email@service.com')
-    contact = models.PositiveIntegerField(blank=True, null = True)
+    contato = models.PositiveIntegerField(blank=True, null = True)
     CPF = models.PositiveIntegerField(blank=True, null = True)
-
+    def __str__(self):              # __unicode__ on Python 2
+        return self.name
+    def get_absolute_url(self):
+        return reverse('student-list')
 
 class StudentUser(AbstractBaseUser):
     username = models.CharField(
@@ -69,31 +77,31 @@ class StudentUser(AbstractBaseUser):
     bolsa = models.CharField(max_length=7, choices = tipoBolsa,default='PIBIC')
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    birth_date = models.DateField(blank=True, null=True)
-    dre = models.PositiveIntegerField(blank=True, null= True)
-    rg = models.PositiveIntegerField(blank=True, null=True)
-    zip_code = models.PositiveIntegerField(blank=True, null=True)
-    residence_address = models.CharField(max_length=255, default = 'Insira o endereco de residencia')
-    telephone_number = models.PositiveIntegerField(blank=True, null=True)
-    course = models.CharField(max_length=100)
+    data_Nascimento = models.DateField(blank=True, null=True)
+    DRE = models.PositiveIntegerField(blank=True, null= True)
+    RG = models.PositiveIntegerField(blank=True, null=True)
+    CEP = models.PositiveIntegerField(blank=True, null=True)
+    endereco = models.CharField(max_length=255, default = 'Insira o endereco de residencia')
+    telefone = models.PositiveIntegerField(blank=True, null=True)
+    curso = models.CharField(max_length=100)
     def __str__(self):              # __unicode__ on Python 2
                 return self.name
     def get_absolute_url(self):
             return reverse_lazy('studentuser-list')
-#            return reverse('student-list', kwargs={'pk': self.pk})
+#            return reverse('student-list', kwaRGs={'pk': self.pk})
 
 
 #    objects = MyUserManager()
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = studentFieldsList
+    REQUIRED_FIELDS = studentUserFieldsList
 
     def get_full_name(self):
         # The user is identified by their name
         return self.name
 
 #    def get_short_name(self):
-        # The user is identified by their email address
+        # The user is identified by their email adDREss
 #        return self.email
 
  #   def __str__(self):              # __unicode__ on Python 2
@@ -128,7 +136,7 @@ class TeacherUser(AbstractBaseUser):
     )
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    birth_date = models.DateField(blank=True, null=True)
+    data_Nascimento = models.DateField(blank=True, null=True)
     register_number = models.PositiveIntegerField(blank=True, null = True)
     email = models.CharField(max_length=100, default='your_email@service.com')
     contact = models.PositiveIntegerField(blank=True, null = True)
@@ -140,7 +148,7 @@ class TeacherUser(AbstractBaseUser):
                 return self.name
     def get_absolute_url(self):
             return reverse('teacheruser-list')
-#            return reverse('student-list', kwargs={'pk': self.pk})
+#            return reverse('student-list', kwaRGs={'pk': self.pk})
 
 
 #    objects = MyUserManager()
@@ -153,7 +161,7 @@ class TeacherUser(AbstractBaseUser):
         return self.name
 
 #    def get_short_name(self):
-        # The user is identified by their email address
+        # The user is identified by their email adDREss
 #        return self.email
 
  #   def __str__(self):              # __unicode__ on Python 2

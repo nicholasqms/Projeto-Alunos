@@ -5,7 +5,7 @@ from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from alunos.models import StudentUser,TeacherUser,studentFieldsList,teacherFieldsList
+from alunos.models import studentUserFieldsList,StudentUser,TeacherUser,studentFieldsList,teacherFieldsList
 
 
 class StudentAddForm(ModelForm):
@@ -21,7 +21,7 @@ class StudentUserCreationForm(forms.ModelForm):
 
     class Meta:
         model = StudentUser
-        fields = studentFieldsList
+        fields = studentUserFieldsList
     def clean_password2(self):
         # Check that the two password entries match
         password1 = self.cleaned_data.get("password1")
@@ -48,7 +48,7 @@ class StudentUserChangeForm(forms.ModelForm):
 
     class Meta:
         model = StudentUser
-        fields = studentFieldsList
+        fields = studentUserFieldsList
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.
         # This is done here, rather than on the field, because the

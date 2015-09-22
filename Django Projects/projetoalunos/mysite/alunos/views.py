@@ -2,7 +2,7 @@ from django.views.generic.base import TemplateView
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView,FormView, DeleteView, UpdateView
 from django.core.urlresolvers import reverse_lazy
-from .models import Student,StudentUser,TeacherUser, studentFieldsList,teacherFieldsList
+from .models import Student,StudentUser,TeacherUser, studentFieldsList,studentUserFieldsList,teacherFieldsList
 from django.contrib.auth.models import User
 from django import forms
 from forms import StudentAddForm, StudentUserCreationForm,TeacherUserCreationForm
@@ -32,7 +32,7 @@ class TeacherUserList(ListView):
 
 class StudentUserUpdate(UpdateView):
     model = StudentUser
-    fields = studentFieldsList
+    fields = studentUserFieldsList
     sucess_url = reverse_lazy('student-list')
 
 class StudentUserDelete(DeleteView):
@@ -51,8 +51,13 @@ class TeacherUserDelete(DeleteView):
 class StudentCreate(CreateView):
       model = Student
       fields = studentFieldsList
-      sucess_url = reverse_lazy('studentuser-list')    
-    
+      sucess_url = reverse_lazy('studentuser-list')
+"""	  
+      def form_valid(self,form):
+            if (Student.dre_valid()):
+                return super(StudentCreate,self).form_valid(form)
+
+"""
 class StudentUpdate(UpdateView):
       model = Student
       fields = studentFieldsList

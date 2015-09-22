@@ -1,21 +1,27 @@
 <!DOCTYPE html>
-<html>
+    <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title> Projeto Alunos</title>
+         <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+         <link rel="stylesheet" type="text/css" href="/base.css" />
     </head>
 
     <body>
     <b>Projeto Alunos</b>
-   {% if user.is_authenticated %}
-    <br></br> <a href='home'>Home</a> 
-    <br></br> <a href='/students/create'>Cadastrar um aluno</a>
-    <br></br> <a href='/teachers/create'>Cadastrar um Professor</a>
-    <br></br> <a href='/students/'>Listar Alunos</a>
-    <br></br> <a href='/teachers/users'>Listar Professores</a>
-    <br></br> <a href='/logout'>Logout</a>
-   {% else %}
-    <br></br> <a href='/login/'>Login</a>
-    {% endif %}
-    {% block content %}{% endblock content %}
+            {% if user.is_authenticated %}       
+           <ul id='top'>
+              <a href='home'>Home</a> 
+              <a href='/students/create'>Cadastrar um aluno</a> 
+              <a href='/teachers/create'>Cadastrar um Professor</a>
+              <a href='/students/'>Listar Alunos</a>
+              <a href='/teachers/users'>Listar Professores</a>
+              <a href='/logout'>Logout</a>
+            </ul>
+            {% else %}
+             <br> <a href='/login/'>Login</a>
+            {% endif %}
+            <div id="content">
+                {% block content %}{% endblock content %}</div>
     </body>
 </html>
+

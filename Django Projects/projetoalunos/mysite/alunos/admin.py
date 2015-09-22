@@ -7,9 +7,10 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from .backends import studentbackend
 # Register your models here.
 
-from .models import Student,StudentUser,TeacherUser,studentFieldsList
+from .models import Student,Orientador,orientadorFieldsList,StudentUser,TeacherUser,studentFieldsList,studentUserFieldsList
 
 admin.site.register(Student)
+admin.site.register(Orientador)
 #admin.site.register(Grade)
 
 
@@ -24,7 +25,7 @@ class StudentUserCreationForm(forms.ModelForm):
 
     class Meta:
         model = StudentUser
-        fields = studentFieldsList
+        fields = studentUserFieldsList
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -52,7 +53,7 @@ class StudentUserChangeForm(forms.ModelForm):
 
     class Meta:
         model = StudentUser
-        fields = studentFieldsList
+        fields = studentUserFieldsList
 
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.
