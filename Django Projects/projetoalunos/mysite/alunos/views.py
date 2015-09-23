@@ -16,7 +16,7 @@ from mysite import settings
 # Create your views here.
 
 class HomePageView(TemplateView):
-	template_name = "base.html"
+	template_name = "home.html"
 	
 class StudentList(ListView):
      model = Student	

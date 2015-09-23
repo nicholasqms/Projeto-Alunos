@@ -7,6 +7,10 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
         <style>
+table,th,td {
+    border:1px solid black;
+    background-color:Azure;  
+    }
 div.block {
     float: left;
     clear: up;
@@ -46,19 +50,7 @@ a.header:hover, a.header:active {
         <meta name="robots" content="NONE,NOARCHIVE" />
       </head>
 
-    <body class="dashboard">
-    
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+    <body class="dashboard">                                                                                 
         <!--Container -->
     <div id="container">
 
@@ -81,17 +73,18 @@ a.header:hover, a.header:active {
     </div>
     <div>
       <ul class="nav navbar-nav">
+          <li><a>Sistema Alunos</a></li> 
         <li class="active"><a href='/home/'>Home</a></li>
         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Cadastrar <span class="caret"></span></a>
            <ul class="dropdown-menu">
-           <li ><a  href='/students/add/'>Cadastrar um aluno</a> </li>
-           <li ><a href='/orientadores/add/'>Cadastrar um Professor</a></li>      
+           <li ><a  href='/students/add/'>Cadastrar um Aluno</a> </li>
+           <li ><a href='/orientadores/add/'>Cadastrar um Orientador</a></li>      
            </ul>
         </li>
         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Listar <span class="caret"></span></a>
            <ul class="dropdown-menu">
                <li ><a  href='/students/'>Listar Alunos</a></li>
-              <li ><a href='/orientadores'>Listar Professores</a></li>
+              <li ><a href='/orientadores/'>Listar Orientadores</a></li>
     </ul>
           </li>
           <li class="active"><a href='/logout/'>Logout</a></li>
@@ -129,8 +122,24 @@ a.header:hover, a.header:active {
            <!--   <li class="header" ><a class="header" href='/logout'>Logout</a></li>
             </ul> -->           
             {% else %}
-              <strong>Welcome</strong>.
-             <a class="header" href='/login/'>Login</a>
+             <nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#"></a>
+    </div>
+            <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#"></a>
+    </div>
+    <div>
+      <ul class="nav navbar-nav">
+          <li><a>Sistema Alunos</a></li>  
+        <li class="active"><a href='/login/'>Login</a></li>                  
+      </ul>
+    </div>
+      </div>
+                 </div>
+      </nav> 
             {% endif %}
             </div>
             </nav>

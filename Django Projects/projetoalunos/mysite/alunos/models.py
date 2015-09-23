@@ -8,8 +8,9 @@ from django.core.urlresolvers import reverse_lazy
 from django.core.exceptions import ValidationError
 #from alunos.validators import dre_is_valid
 
+studentStatusList = [('Ativo','Ativo'),('Inativo','Inativo'),('Viajando','Viajando')]
 studentInactiveStatusList = ['Graduado','Trancado','Transferencia']
-studentFieldsList = ['user','name','bolsa','tipo','data_Nascimento','DRE','RG','CEP','endereco','telefone','curso','orientador_aluno']
+studentFieldsList = ['user','name','bolsa','tipo','status','data_Nascimento','DRE','RG','CEP','endereco','telefone','curso','orientador_aluno']
 orientadorFieldsList = ['user','name','is_active','is_admin','data_Nascimento','CPF','email','contato','numero_Registro']
 tipoBolsa = [('PIBIC','PIBIC'),('FAPERJ','FAPERJ'),('CNPq','CNPq'),('Projeto','Projeto')]
 tipoOrientado = [('Ensino Medio','Ensino Medio'),('Iniciacao Cientifica','Iniciacao Cientifica'),('Mestrado','Mestrado'),('Doutorado','Doutorado')]
@@ -35,6 +36,7 @@ class Student(models.Model):
     endereco = models.CharField(max_length=255, default = 'Insira o endereco de residencia')
     telefone = models.PositiveIntegerField(blank=True, null=True)
     curso = models.CharField(max_length=100)
+    status = models.CharField(max_length=30, choices =studentStatusList ,default='Ativo')
     orientador_aluno = models.ForeignKey('Orientador',verbose_name="Orientador")
     def __str__(self):              # __unicode__ on Python 2
         return self.name

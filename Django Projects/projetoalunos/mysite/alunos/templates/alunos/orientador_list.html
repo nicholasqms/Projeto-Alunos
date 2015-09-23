@@ -1,27 +1,36 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>Students</h2>
+    <h2>Orientadores</h2>
     <ul>
-        {% for Student in object_list %}
-	        {% url 'student_update' Student.id as Student_url %} 
-        <h3><li><a href={{Student_url}}  >{{ Student.name }}</a></li><a>{{Student.pk}}</a></h3>
-        <li>{{ Student.bolsa }}</li>
-        <li>{{ Student.tipo }}</li>
-        <li>{{ Student.data_Nascimento }}</li>
-        <li>{{ Student.DRE }}</li>
-        <li>{{ Student.RG }}</li>
-        <li>{{ Student.CEP }}</li>
-        <li>{{ Student.endereco }}</li>
-        <li>{{ Student.telefone }}</li>
-        <li>{{ Student.curso }}</li>
-<!--            {% for x in Student.studentFieldsList %}
-                {{ atttribute }} {{ x }}
-                <li>{{Student.attribute|safe}}</li>
-            {% endfor %} -->
+        <table id="orientadores">
+        <tr>
+            <th>Nome</th>
+            <th>Id</th>
+            <th>Ativo(S/N)</th>
+            <th>Admin(S/N)</th>
+            <th>Data Nascimento</th>
+            <th>CPF</th>
+            <th>Email</th>
+            <th>Contato</th>
+            <th>Numero Registro</th>
+        </tr>
+        
+        {% for Orientador in object_list %}
+	        {% url 'orientador_update' Orientador.id as Orientador_url %} 
+        <tr>
+            <td><a href={{Orientador_url}}  >{{ Orientador.name }}</a></td>
+            <td>{{Orientador.pk}}</td>
+            <td>{{ Orientador.is_active }}</td>
+            <td>{{ Orientador.is_admin }}</td>
+            <td>{{ Orientador.data_Nascimento }}</td>
+            <td>{{ Orientador.CPF }}</td>
+            <td>{{ Orientador.email }}</td>
+            <td>{{ Orientador.contato}}</td>
+            <td>{{ Orientador.numero_Registro }}</td>
+            <td>{{ Orientador.telefone }}</td>        
         {% empty %}
-            <li>Não existem alunos cadastrados no sistema.</li> 
+            <li>Não existem orientadores cadastrados no sistema.</li> 
         {% endfor %}
     </ul>
-
 {% endblock %}
