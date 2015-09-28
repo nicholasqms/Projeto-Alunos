@@ -1,17 +1,27 @@
+import datetime
 from django.forms import ModelForm
 from django.contrib.auth.models import User
 from django import forms
 from django.contrib import admin
 from django.contrib.auth.models import Group
+from django.forms.extras.widgets import SelectDateWidget
+from django.forms.widgets import TextInput
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from alunos.models import Orientador,studentFieldsList
+from .models import Student,Orientador, studentFieldsList,orientadorFieldsList
 
 
-class StudentAddForm(ModelForm):
+class StudentForm(ModelForm): 
+#    data_Nascimento = forms.DateField(blank=True, null= False, required = True, widget= SelectDateWidget)
     class Meta:
-        model = User
-        fields = ('username', 'email', 'password')
+        model = Student
+        fields = studentFieldsList        
+        required = studentFieldsList
+        widgets = {'data_Nascimento' : SelectDateWidget(empty_label=("Choose Year", "Choose Month", "Choose Day")), 'DRE': TextInput,  
+                   'RG': TextInput, 'passaporte_numero' : TextInput,
+                   'CEP': TextInput , 'telefone': TextInput , 
+                   'passaporte_validade' : SelectDateWidget(empty_label=("Choose Year", "Choose Month", "Choose Day")),
+                  }
 """
 class StudentUserCreationForm(forms.ModelForm):
 #    A form for creating new users. Includes all the required
@@ -83,11 +93,10 @@ class OrientadorCreationForm(forms.ModelForm):
 
 
 class OrientadorChangeForm(forms.ModelForm):
-#    """# A form for updating users. Includes all the fields on
+#"""# A form for updating users. Includes all the fields on
 #    the user, but replaces the password field with admin's
 #    password hash display field.
-    """
-    password = ReadOnlyPasswordHashField()
+"""password = ReadOnlyPasswordHashField()
 
     class Meta:
         model = Orientador
@@ -133,4 +142,4 @@ class OrientadorChangeForm(forms.ModelForm):
 # ... and, since we're not using Django's built-in permissions,
 # unregister the Group model from admin.
 #admin.site.unregister(Group)
-
+"""

@@ -7,6 +7,7 @@
         <tr>
             <th>Nome</th>
             <th>Id</th>
+            <th>Status</th>
             <th>Bolsa</th>
             <th>Tipo</th>
             <th>Data Nascimento</th>
@@ -16,14 +17,18 @@
             <th>Endereço</th>
             <th>Telefone</th>
             <th>Curso</th>
-            <th>Orientador</th>
-        </tr>
+            <th>Número do Passaporte</th>
+            <th>Validade</th>
+            <th>Orientador</th>          
+            </tr>
         
         {% for Student in object_list %}
-	        {% url 'student_update' Student.id as Student_url %} 
+	        {% url 'student_update' Student.id as Student_url %}
+            {% url 'orientador-update' Student.orientador_aluno  as Orientador_url %} 
         <tr>
-            <td><a href={{Student_url}}  >{{ Student.name }}</a></td>
+            <td><a href= "{{Student_url}}"  >{{ Student.name }}</a></td>
             <td>{{Student.pk}}</td>
+            <td>{{Student.status}}</td>
             <td>{{ Student.bolsa }}</td>
             <td>{{ Student.tipo }}</td>
             <td>{{ Student.data_Nascimento }}</td>
@@ -33,6 +38,8 @@
             <td>{{ Student.endereco }}</td>
             <td>{{ Student.telefone }}</td>
             <td>{{ Student.curso }}</td>
+            <td>{{ Student.passaporte_numero }}</td>
+            <td>{{ Student.passaporte_validade }}</td>
             <td>{{ Student.orientador_aluno }}</td>
 <!--            {% for x in Student.studentFieldsList %}
                 {{ atttribute }} {{ x }}

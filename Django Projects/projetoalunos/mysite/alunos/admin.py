@@ -7,15 +7,17 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 #from .backends import studentbackend
 # Register your models here.
 
-from alunos.models import Student,Orientador,orientadorFieldsList,studentFieldsList
+from alunos.models import StudentStatus,StudentBolsa,Student,Orientador,orientadorFieldsList,studentFieldsList
 
 #admin.site.register(Student)
 #admin.site.register(Orientador)
 #admin.site.register(Grade)
 #@admin.register(Student)
+admin.site.register(StudentStatus)
+admin.site.register(StudentBolsa)
 class StudentAdmin(admin.ModelAdmin):
     fields = studentFieldsList
-    list_display = ('name','bolsa','tipo')
+    list_display = ('name','tipo')
     pass
     
 #@admin.register(Orientador, verbose_name = 'Orientadores')
