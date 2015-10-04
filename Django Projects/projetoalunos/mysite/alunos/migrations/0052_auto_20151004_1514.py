@@ -8,13 +8,13 @@ import alunos.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('alunos', '0037_auto_20150928_1514'),
+        ('alunos', '0051_auto_20151004_1513'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='student',
             name='DRE',
-            field=models.PositiveIntegerField(blank=True, null=True),
+            field=models.PositiveIntegerField(blank=True, null=True, validators=[alunos.models.dre_is_valid]),
         ),
     ]

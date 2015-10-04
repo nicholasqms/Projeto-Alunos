@@ -2,19 +2,18 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-import alunos.models
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('alunos', '0037_auto_20150928_1514'),
+        ('alunos', '0048_auto_20150929_0852'),
     ]
 
     operations = [
-        migrations.AlterField(
+        migrations.AddField(
             model_name='student',
-            name='DRE',
-            field=models.PositiveIntegerField(blank=True, null=True),
+            name='passaporte_emissao',
+            field=models.CharField(max_length=30, null=True, verbose_name=b'Pa\xc3\xads de Emiss\xc3\xa3o', blank=True),
         ),
     ]

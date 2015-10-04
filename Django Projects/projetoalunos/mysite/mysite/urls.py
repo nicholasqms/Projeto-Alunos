@@ -17,7 +17,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf.urls import include
 from django.http import HttpResponse
-from alunos.views import HomePageView#, Logout
+from alunos.views import HomePageView
 from alunos.views import StudentList, StudentCreate, StudentUpdate, StudentDelete,OrientadorCreate,OrientadorUpdate,OrientadorDelete,OrientadorList
 from alunos import views
 from django.contrib.auth import views as auth_views

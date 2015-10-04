@@ -3,7 +3,7 @@
 {% block content %}
     <h2>Alunos</h2>
     <ul>
-        <table id="alunos">
+        <table id="alunos" class='tablesorter'>
         <tr>
             <th>Nome</th>
             <th>Id</th>
@@ -19,6 +19,8 @@
             <th>Curso</th>
             <th>Número do Passaporte</th>
             <th>Validade</th>
+            <th>Agência</th>
+            <th>Conta</th>
             <th>Orientador</th>          
             </tr>
         
@@ -40,6 +42,8 @@
             <td>{{ Student.curso }}</td>
             <td>{{ Student.passaporte_numero }}</td>
             <td>{{ Student.passaporte_validade }}</td>
+            <td>{{ Student.numero_agencia }}</td>
+            <td>{{ Student.numero_conta }}</td>
             <td>{{ Student.orientador_aluno }}</td>
 <!--            {% for x in Student.studentFieldsList %}
                 {{ atttribute }} {{ x }}
@@ -49,5 +53,6 @@
             <li>Não existem alunos cadastrados no sistema.</li> 
         {% endfor %}
     </ul>
+     
 
 {% endblock %}

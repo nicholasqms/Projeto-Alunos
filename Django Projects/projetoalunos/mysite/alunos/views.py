@@ -15,7 +15,7 @@ from django.shortcuts import render,render_to_response
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 
-from .forms import StudentForm
+from .forms import StudentForm,StudentUpdateForm
 from .models import Student,Orientador, studentFieldsList,orientadorFieldsList
 from mysite import settings
 # Create your views here.
@@ -49,7 +49,7 @@ class StudentUpdate(UpdateView):
 """
 class StudentUpdate(UpdateView):
     model = Student
-    form_class = StudentForm
+    form_class = StudentUpdateForm
     template_name = 'student_form.html'
     sucess_url = reverse_lazy('student-list')
     

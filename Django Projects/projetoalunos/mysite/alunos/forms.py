@@ -17,11 +17,26 @@ class StudentForm(ModelForm):
         model = Student
         fields = studentFieldsList        
         required = studentFieldsList
-        widgets = {'data_Nascimento' : SelectDateWidget(empty_label=("Choose Year", "Choose Month", "Choose Day")), 'DRE': TextInput,  
-                   'RG': TextInput, 'passaporte_numero' : TextInput,
+        widgets = {'data_Nascimento' : forms.DateInput(attrs={'type':'date'}), 'DRE': TextInput,                 
+                   'RG': TextInput, 'rg_validade' : forms.DateInput(attrs={'type':'date'}),'passaporte_numero' : TextInput,
                    'CEP': TextInput , 'telefone': TextInput , 
-                   'passaporte_validade' : SelectDateWidget(empty_label=("Choose Year", "Choose Month", "Choose Day")),
+                   'passaporte_validade' : forms.DateInput(attrs={'type':'date'}),
+                   'numero_agencia' : TextInput, 'numero_conta' : TextInput
                   }
+        
+class StudentUpdateForm(StudentForm):
+    class Meta:
+        model = Student
+        fields = studentFieldsList        
+        required = studentFieldsList
+        widgets = {'data_Nascimento' : forms.DateInput(attrs={'type':'date'}), 'DRE': TextInput,                 
+                   'RG': TextInput, 'rg_validade' : forms.DateInput(attrs={'type':'date'}),'passaporte_numero' : TextInput,
+                   'CEP': TextInput , 'telefone': TextInput , 
+                   'passaporte_validade' : forms.DateInput(attrs={'type':'date'}),
+                   'numero_agencia' : TextInput, 'numero_conta' : TextInput
+                  }
+        
+        exclude = ('user',)
 """
 class StudentUserCreationForm(forms.ModelForm):
 #    A form for creating new users. Includes all the required
