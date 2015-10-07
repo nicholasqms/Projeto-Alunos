@@ -1,7 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
-<form action="" method="post">{% csrf_token %}
-    {{ form.as_p }}
+<!--<form action="" method="post">{% csrf_token %}    
+    {{ form.as_p }}     
     <input type="submit" value="Create" />
-</form>
+</form> -->
+<form action="" method="post">{% csrf_token %}    
+    <p><a target="popup" onclick="window.open('/register/','name','width=800,height=400')">Novo Usuário</a>(após adicionar o novo usuário <a href="" onclick="window.location.reload(true);">recarregue</a> essa página)</p>
+    {% for field in form %}
+    <p>{{ field.label_tag }} {{ field }}</p>
+       {{ field.errors }}
+    {% endfor %}
+    {{ field.non_field_errors }}
+    <input type="submit" value="Create" />
+</form> 
 {% endblock %}

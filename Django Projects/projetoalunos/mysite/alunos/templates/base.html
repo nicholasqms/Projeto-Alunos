@@ -1,17 +1,28 @@
 <!DOCTYPE html>
     <html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
+{% load staticfiles %}        
+    <head>      
         <title> Projeto Alunos</title>
          <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+        <link rel="stylesheet" 
+href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
+        <script type="text/javascript" 
+src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-        
-
+        <script src="{% static '/javascripts/sorttable.js' %}"></script>
+        <script src='http://kryogenix.org/code/browser/sorttable/sorttable.js'></script>
         <style>
-table,th,td {
-    border:1px solid black;
-    background-color:Azure;  
+          
+   th{
+    color: white;
+    border:0px solid black;
+    background-color:#333;  
+    }
+tr:nth-child(odd) { background: #dfdfdf; }            
+   td {
+    border:1px solid black;  
     }
 div.block {
     float: left;
@@ -23,8 +34,22 @@ ul.header {
     padding: 0;
     overflow: hidden;
 }
-
-
+  /* Scrollability of table */
+/*    table { font-family: sans-serif; }            
+    table { width: 1000px; } /* fixed width table */
+/*    thead tr { display: block; } /* makes it sizeable */
+/*    tbody { 
+      display: block; /* makes it sizeable */
+/*      height: 250px; /* height of scrollable area */
+/*      overflow: auto; /* scroll rather than overflow */
+/*     width: 100%; /* fill the box */
+/*    }
+/*    thead th { width: 300px; } /* fixed width for THs */
+/*    tbody td { width: 284px; } /* fixed width for TDs */
+    /* the tbody needs to be 16px less than the thead, for the scrollbar */
+/*table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after { 
+    content: " \25B4\25BE" 
+} */
             
 li.header {
     float:left;
@@ -94,35 +119,6 @@ a.header:hover, a.header:active {
     </div>
   </div>
 </nav>
-  
-<!--<div class="container">
-            
-            
-            
-           <ul class="header" id='top'>             
-              <li class="header" ><a class="header" href='/home'>Home</a> </li>-->
-<!--              <li class="header"><a class="header" href='/students/add/'>Cadastrar um aluno</a> </li>
-              <li class="header"><a class="header" href='/orientadores/add/'>Cadastrar um Professor</a></li>-->
-              <!--<div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Cadastrar
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu">
-      <li class="header"><a class="header" href='/students/add/'>Cadastrar um aluno</a> </li>
-      <li class="header"><a class="header" href='/orientadores/add/'>Cadastrar um Professor</a></li>      
-    </ul>
-                  </div>
-               <div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Listar
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu">
-      <li class="header" ><a class="header" href='/students/'>Listar Alunos</a></li>
-              <li class="header" ><a class="header" href='/orientadores'>Listar Professores</a></li>
-    </ul>
-  </div>-->
-<!--              <li class="header" ><a class="header" href='/students/'>Listar Alunos</a></li>
-              <li class="header" ><a class="header" href='/orientadores'>Listar Professores</a></li>-->
-           <!--   <li class="header" ><a class="header" href='/logout'>Logout</a></li>
-            </ul> -->           
             {% else %}
              <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -136,7 +132,8 @@ a.header:hover, a.header:active {
     <div>
       <ul class="nav navbar-nav">
           <li><a>Sistema Alunos</a></li>  
-        <li class="active"><a href='/login/'>Login</a></li>                  
+        <li class="active"><a href='/login/'>Login</a></li>
+          <li class="active"><a href='/register/'>Cadastre-se</a></li>                  
       </ul>
     </div>
       </div>

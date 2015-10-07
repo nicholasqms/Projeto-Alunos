@@ -13,14 +13,18 @@ Including another URLconf
     1. Add an import:  from blog import urls as blog_urls
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
-from django.conf.urls import include, url
+from django.conf import settings
+from django.conf.urls import include, url, patterns
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.conf.urls import include
 from django.http import HttpResponse
 from alunos.views import HomePageView
+from alunos.forms import register_user
 from alunos.views import StudentList, StudentCreate, StudentUpdate, StudentDelete,OrientadorCreate,OrientadorUpdate,OrientadorDelete,OrientadorList
 from alunos import views
 from django.contrib.auth import views as auth_views
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 #from alunos.templates import base.css
 
 urlpatterns = [
@@ -32,7 +36,8 @@ urlpatterns = [
 	url(r'^orientadores/add/$', OrientadorCreate.as_view(), name='orientador_add'),
     url(r'^orientadores/(?P<pk>[0-9]+)/$', OrientadorUpdate.as_view(), name='orientador_update'),
     url(r'^students/(?P<pk>[0-9]+)/delete/$', OrientadorDelete.as_view(), name='orientador_delete'),
-
+    url(r'^register/$',register_user ),
+    #url(r'^captcha/', include('captcha.urls')),
     #url(r'^',include('django.contrib.auth.urls')),
     url(r'^login/$', auth_views.login),
     url(r'^password_change/$',auth_views.password_change,name='password_change'),
@@ -50,4 +55,5 @@ urlpatterns = [
 #    url(r'^',include('django.contrib.auth.urls')),
     url(r'^home/$',HomePageView.as_view(),name='homepage'),
     url(r'^',HomePageView.as_view(),name='main'),
-]
+] + staticfiles_urlpatterns() + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+

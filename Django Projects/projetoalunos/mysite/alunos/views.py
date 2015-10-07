@@ -14,6 +14,8 @@ from django.http import HttpResponseRedirect,HttpResponse
 from django.shortcuts import render,render_to_response
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+
 
 from .forms import StudentForm,StudentUpdateForm
 from .models import Student,Orientador, studentFieldsList,orientadorFieldsList
@@ -24,7 +26,8 @@ class HomePageView(TemplateView):
     template_name = "home.html"
 	
 class StudentList(ListView):
-     model = Student
+    model = Student
+    
 
 """class StudentCreate(CreateView):
     model = Student
@@ -78,4 +81,4 @@ class OrientadorUpdate(UpdateView):
 class OrientadorDelete(DeleteView):
     model = Orientador
     success_url = reverse_lazy('orientador-list')        
-        
+                    

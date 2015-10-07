@@ -2,6 +2,10 @@ import datetime
 from django.forms import ModelForm
 from django.contrib.auth.models import User
 from django import forms
+from django.shortcuts import render
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
 from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.forms.extras.widgets import SelectDateWidget
@@ -9,7 +13,7 @@ from django.forms.widgets import TextInput
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from .models import Student,Orientador, studentFieldsList,orientadorFieldsList
-
+#cfrom captcha.fields import CaptchaField
 
 class StudentForm(ModelForm): 
 #    data_Nascimento = forms.DateField(blank=True, null= False, required = True, widget= SelectDateWidget)
@@ -121,40 +125,16 @@ class OrientadorChangeForm(forms.ModelForm):
         # Regardless of what the user provides, return the initial value.
         # This is done here, rather than on the field, because the
         # field does not have access to the initial value
-        return self.initial["password"]
+        return self.initial["password"] """
 
-
-#class StudentUserAdmin(UserAdmin):
-    # The forms to add and change user instances
-#    form = StudentUserChangeForm
-#    add_form = StudentUserCreationForm
-
-    # The fields to be used in displaying the User model.
-    # These override the definitions on the base UserAdmin
-    # that reference specific fields on auth.User.
-    
- #   list_display = ('name','birth_date','dre','course', 'is_admin')
-  #  list_filter = ('is_admin',)
-   # fieldsets = (
-    #    (None, {'fields': ('name', 'password')}),
-     #   ('Personal info', {'fields': ('birth_date','dre','course',)}),
-      #  ('Permissions', {'fields': ('is_admin',)}),
-    #)
-    # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
-    # overrides get_fieldsets to use this attribute when creating a user.
-   # add_fieldsets = (
-    #    (None, {
-     #       'classes': ('wide',),
-      #      'fields': ('name','birth_date','dre','course', 'password1', 'password2')}
-       # ),
-   # )
-    #search_fields = ('name',)
-    #ordering = ('name',)
-    #filter_horizontal = ()
-
-# Now register the new UserAdmin...
-#admin.site.register(StudentUser)# ,MyUserAdmin)
-# ... and, since we're not using Django's built-in permissions,
-# unregister the Group model from admin.
-#admin.site.unregister(Group)
-"""
+def register_user(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            new_user = form.save()
+            return HttpResponseRedirect("/home/")
+    else:
+        form = UserCreationForm()
+    return render(request, "registration/register.html", {
+        'form': form,
+    })

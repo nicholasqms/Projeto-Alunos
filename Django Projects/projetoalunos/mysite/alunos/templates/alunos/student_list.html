@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
+
     <h2>Alunos</h2>
     <ul>
-        <table id="alunos" class='tablesorter'>
+        
+        <table id="alunos" class='sortable table table-striped'>
         <tr>
             <th>Nome</th>
             <th>Id</th>
@@ -52,6 +54,9 @@
         {% empty %}
             <li>Não existem alunos cadastrados no sistema.</li> 
         {% endfor %}
+            </tr>
+            
+        </table>
     </ul>
      
 

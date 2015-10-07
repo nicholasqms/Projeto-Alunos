@@ -3,7 +3,7 @@
 {% block content %}
     <h2>Orientadores</h2>
     <ul>
-        <table id="orientadores">
+        <table id="orientadores" class='sortable table table-striped'>
         <tr>
             <th>Nome</th>
             <th>Id</th>
@@ -12,8 +12,8 @@
             <th>Data Nascimento</th>
             <th>CPF</th>
             <th>Email</th>
-            <th>Contato</th>
-            <th>Numero Registro</th>
+            <th>Contato</th>           
+            <th>Numero Registro</th>          
         </tr>
         
         {% for Orientador in object_list %}
@@ -27,10 +27,11 @@
             <td>{{ Orientador.CPF }}</td>
             <td>{{ Orientador.email }}</td>
             <td>{{ Orientador.contato}}</td>
-            <td>{{ Orientador.numero_Registro }}</td>
-            <td>{{ Orientador.telefone }}</td>        
+            <td>{{ Orientador.numero_Registro }}</td>      
         {% empty %}
             <li>Não existem orientadores cadastrados no sistema.</li> 
         {% endfor %}
+            </tr>
+        </table>
     </ul>
 {% endblock %}

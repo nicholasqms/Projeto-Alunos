@@ -8,7 +8,8 @@ from django.forms import ModelForm
 from django.utils import timezone
 from django.core.urlresolvers import reverse_lazy
 from django.core.exceptions import ValidationError
-from .listas import listaPaises
+from .listas import listaPaises,listaEstados
+from .validators import dre_is_valid, length_validator
 #from alunos.validators import dre_is_valid
 
 studentStatusList = [('Ativo','Ativo'),('Inativo','Inativo'),('Viajando','Viajando')]
@@ -18,18 +19,10 @@ orientadorFieldsList = ['user','name','is_active','is_admin','data_Nascimento','
 tipoBolsa = [('PIBIC','PIBIC'),('FAPERJ','FAPERJ'),('CNPq','CNPq'),('Projeto','Projeto')]
 tipoOrientado = [('Ensino Medio','Ensino Medio'),('Iniciacao Cientifica','Iniciacao Cientifica'),('Mestrado','Mestrado'),('Doutorado','Doutorado')]
 tipoOrientador = ['Professor','Pesquisador']
-listaEstados = [('Acre','AC'),('Alagoas','AL'),('Amapá','AP'),('Amazonas','AM'),('Bahia','BA'),
-('Ceará','CE'),('Distrito Federal','DF'),('Espírito Santo','ES'),('Goiás','GO'),
-('Maranhão','MA'),('Mato Grosso','MT'),
-('Mato Grosso do Sul','MS'),('Minas Gerais','MG'),
-('Pará','PA'),('Paraíba','PB'),('Paraná','PR'),('Pernambuco','PE'),
-('Piauí','PI'),('Rio de Janeiro','RJ'),
-('Rio Grande do Norte','RN'),('Rio Grande do Sul','RS'),
-('Rondônia','RO'),('Roraima','RR'),('Santa Catarina','SC'),
-('São Paulo','SP'),('Sergipe','SE'),('Tocantins','TO')]
+
 
 # Create your models here.
-def dre_is_valid(value):
+"""def dre_is_valid(value):
     if (len(str(value)) != 9):
         raise ValidationError('%s não é um valor válido, insira um numero correto' %value)  
     indice = soma = 0
@@ -41,7 +34,7 @@ def dre_is_valid(value):
 def length_validator(value):
     if (len(str(value)) != 9):
         raise ValidationError('%s não é um valor válido, insira um numero correto' %value)  
-
+"""
 
 class StudentStatus(models.Model):
     name = models.CharField(verbose_name='Status do Aluno',max_length = 255,default='Ativo')
@@ -106,7 +99,7 @@ class Orientador(models.Model):
     data_Nascimento = models.DateField(blank=True, null=True)
     numero_Registro = models.PositiveIntegerField(blank=True, null = True)
     email = models.CharField(max_length=100, default='your_email@service.com')
-    contato = models.PositiveIntegerField(blank=True, null = True)
+    contato = models.PositiveIntegerField(blank=True, null = True, verbose_name='Telefone para Contato')
     CPF = models.PositiveIntegerField(blank=True, null = True)
     def __str__(self):              # __unicode__ on Python 2
         return self.name
